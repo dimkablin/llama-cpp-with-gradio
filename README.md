@@ -48,12 +48,13 @@ To install all dependencies and run the project locally, follow these steps:
     ```sh
     wget -P src/models/ https://huggingface.co/IlyaGusev/saiga_llama3_8b_gguf/resolve/main/model-q4_K.gguf
     ```
+    
+    Or you can download any model in GGUF format and place it in the `src/models` directory. Don't forget to change the `MODEL_PATH` variable in the `.env` file to specify which model you want to use.
 
 4. **Run the Gradio app:**
     Navigate to the `src` directory and run the application:
     ```sh
-    cd src
-    python gradio_app.py
+    python3 src/gradio_app.py
     ```
 
 ### Docker Installation
