@@ -1,0 +1,4 @@
+llama-cpp-python
+gradio
+requests
+python-dotenv
