@@ -1,4 +1,4 @@
-# LLAMA-CPP-WITH-GRADIO
+# LLAMA-CPP-WITH-GRADIO ![img](https://img.shields.io/badge/Template-black?color=red)
 
 
 ![img](
@@ -15,7 +15,13 @@
 https://img.shields.io/badge/MIT-green?style=flat&label=license
 )
 
+
 This project integrates a language model (LLAMA) with a graphical user interface provided by Gradio. It includes inference capabilities for LLAMA models and provides a web-based interface for interaction. The server-side implementation is built using FastAPI. This project can be used independently by accessing the root page of the deployed project.
+
+<a href="https://www.youtube.com/watch?v=WJp-FT7th9Q&ab_channel=Димка" target="_blank" style="border-radius:10px; display: block; text-align: center;">
+  <img src="https://img.youtube.com/vi/WJp-FT7th9Q/0.jpg" alt="Смотрите видео на YouTube" style="width:60%; height:auto; border-radius:10px;">
+</a>
+
 
 ## Table of Contents
 - [Installation](#installation)
@@ -23,7 +29,7 @@ This project integrates a language model (LLAMA) with a graphical user interface
   - [Docker Installation](#docker-installation)
 - [Usage](#usage)
 - [Project Structure](#project-structure)
-- [API Endpoints](#api-endpoints)
+- [Tasks](#tasks)
 - [Contribution](#contribution)
 
 ## Installation
@@ -96,6 +102,10 @@ LLAMA-CPP-WITH-GRADIO/
 ├── README.md
 └── requirements.txt
 ```
+
+## Tasks
+
+-[ ]   
 
 ## Contribution
 
