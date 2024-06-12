@@ -106,7 +106,8 @@ LLAMA-CPP-WITH-GRADIO/
 ## Tasks
 
 - [ ] Build docker container.
-- [ ] 
+- [ ] Add llama JSON output example.
+- [ ] Add llama function usage example.
 
 ## Contribution
 
