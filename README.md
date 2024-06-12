@@ -19,7 +19,7 @@ https://img.shields.io/badge/MIT-green?style=flat&label=license
 This project integrates a language model (LLAMA) with a graphical user interface provided by Gradio. It includes inference capabilities for LLAMA models and provides a web-based interface for interaction. The server-side implementation is built using FastAPI. This project can be used independently by accessing the root page of the deployed project.
 
 <a href="docs/example.gif" target="_blank" style="border-radius:10px; display: block; text-align: center;">
-  <img src="docs/example.gif" alt="Пример" style="width:100%; height:auto; border-radius:10px;">
+  <img src="docs/example.gif" alt="Пример" style="width:80%; height:auto; border-radius:10px;">
 </a>
 
 
