@@ -1,6 +1,6 @@
 from llama_cpp import Llama
-from env import MODEL_PATH, N_CTX, N_THREADS, REPEAT_PENALTY, SYSTEM_PROMPT, TEMPERATURE, TOP_K, TOP_P
 
+from env import MODEL_PATH, N_CTX, N_THREADS
 
 model = Llama(
     model_path=MODEL_PATH,
