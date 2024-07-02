@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-SYSTEM_PROMPT = os.getenv('SYSTEM_PROMPT', "Ты Сайга - дружилюьный и болтливый ассистент.")
+SYSTEM_PROMPT = os.getenv('SYSTEM_PROMPT', "Ты Сайга - дружелюбный и болтливый ассистент.")
 MODEL_PATH = os.getenv('MODEL_PATH', 'src/models/saiga-q4_K.gguf')
 N_CTX = int(os.getenv('N_CTX', 8192))
 TOP_K = int(os.getenv('TOP_K', 30))
