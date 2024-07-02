@@ -1,7 +1,7 @@
 import gradio as gr
 import json
 
-from env import DEFAULT_JSON
+from env import DEFAULT_JSON, EXAMPLES
 from utils import predict
 
 # Initialize values
@@ -41,11 +41,12 @@ def wrapped_predict(message: str, history: list) -> iter:
         "type": "json_object",
         "schema": CURR_JSON
     }
+    message = "Create JSON with this text: " + message
     response = ""
     for response in predict(message, history, response_format):
         yield response
 
-with gr.Blocks() as demo:
+with gr.Blocks(css=".gap { min-height: 75vh; }") as demo:
     gr.Markdown("# Chat Interface with JSON Schema output")
 
     # Here we get JSON output
@@ -53,10 +54,7 @@ with gr.Blocks() as demo:
         chatbot = gr.ChatInterface(
             fn=wrapped_predict,
             description="Enter your message and get a response based on the validated JSON schema.",
-            examples=[
-                "Первая книга, которую я прочитал, была написана Джорджем Оруэллом и называлась 1984.",
-                "Второй по счету книгой в моей коллекции является Мастер и Маргарита Михаила Булгакова."
-            ]
+            examples=EXAMPLES
         )
 
     # Here we can change the response JSON
