@@ -16,7 +16,12 @@ https://img.shields.io/badge/MIT-green?style=flat&label=license
 )
 
 
-This project integrates a language model (LLAMA) with a graphical user interface provided by Gradio. It includes inference capabilities for LLAMA models and provides a web-based interface for interaction. The server-side implementation is built using FastAPI. This project can be used independently by accessing the root page of the deployed project.
+Этот проект является шаблонным для использование llama.cpp в стриме через интерфейс Gradio. Представлены 3 примера его использования:
+- В режиме генерации ответов.
+- выход JSON формата
+- вызов функций через llama.cpp
+
+
 
 <a href="docs/example.gif" target="_blank" style="border-radius:10px; display: block; text-align: center;">
   <img src="docs/example.gif" alt="Пример" style="width:80%; height:auto; border-radius:10px;">
@@ -40,8 +45,10 @@ To install all dependencies and run the project locally, follow these steps:
 
 1. **Create a virtual environment and activate it:**
     ```sh
-    python3 -m venv venv
-    source venv/bin/activate
+    conda create -n fourm python=3.10 -y
+    conda activate fourm
+    pip install --upgrade pip  # enable PEP 660 support
+    pip install -e .
     ```
 
 2. **Install the required Python dependencies:**
@@ -60,8 +67,9 @@ To install all dependencies and run the project locally, follow these steps:
 4. **Run the Gradio app:**
     Navigate to the `src` directory and run the application:
     ```sh
-    python3 src/gradio_app.py
+    python3 src/ text
     ```
+    Также параметр text можно заменить на json или function.
 
 ### Docker Installation
 
@@ -86,27 +94,30 @@ Once the server is running, open your web browser and navigate to `http://127.0.
 
 ## Project Structure
 
-```
-LLAMA-CPP-WITH-GRADIO/
-├── src/
-│   ├── __pycache__/
-│   ├── models/
-│   │   ├── saiga-q4_K.gguf
-│   │   └── download_guff.py
-│   ├── env.py
-│   ├── gradio_app.py
-│   ├── llama_inference.py
-│   └── requirements.txt
-├── .gitignore
+```yaml
+LLAMA-CPP-WITH-GRADIO.
+├── Dockerfile
+├── assets
 ├── LICENSE
 ├── README.md
-└── requirements.txt
+├── requirements.txt
+├── src
+│   ├── examples
+│   │   ├── function_chat.py
+│   │   ├── json_chat.py
+│   │   └── text_chat.py
+│   ├── __main__.py
+│   ├── env.py
+│   ├── llama_inference.py
+│   └── utils.py
+└── weights
+    └── download_gguf.py
 ```
 
 ## Tasks
 
 - [ ] Build docker container.
-- [ ] Add llama JSON output example.
+- [x] Add llama JSON output example.
 - [ ] Add llama function usage example.
 
 ## Contribution
