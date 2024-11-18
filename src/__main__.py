@@ -6,7 +6,7 @@ def launch_chat(arg):
     demos = {
         "text": text_chat.demo,
         "json": json_chat.demo,
-        "function": None
+        "function": function_chat.demo
     }
 
     if arg not in demos or demos[arg] is None:
