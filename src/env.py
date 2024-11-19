@@ -5,7 +5,7 @@ load_dotenv()
 
 
 SYSTEM_PROMPT = os.getenv('SYSTEM_PROMPT', "Ты Сайга - дружелюбный и болтливый ассистент.")
-MODEL_PATH = os.getenv('MODEL_PATH', 'weights/saiga-q4_K.gguf')
+MODEL_PATH = os.getenv('MODEL_PATH', 'weights/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf')
 N_CTX = int(os.getenv('N_CTX', 8192))
 TOP_K = int(os.getenv('TOP_K', 30))
 TOP_P = float(os.getenv('TOP_P', 0.9))

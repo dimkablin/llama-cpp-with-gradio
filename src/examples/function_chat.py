@@ -1,29 +1,30 @@
 import gradio as gr
 import json
-from llama_cpp import Llama
-from env import EXAMPLES, MODEL_PATH, N_CTX, N_THREADS
+from utils import predict
 
-# Initialize LLama model
-model = Llama(
-    model_path=MODEL_PATH,
-    n_ctx=N_CTX,
-    n_parts=1,
-    verbose=False,
-    n_threads=N_THREADS
-)
+robot_position = [5, 5]  
 
-# Example functions that can be triggered
-def get_current_time():
-    from datetime import datetime
-    return {"message": f"Current time is: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"}
-
-def get_greeting(name):
-    return {"message": f"Hello, {name}! How can I assist you today?"}
+def robot_move(direction: str):
+    global robot_position
+    x, y = robot_position
+    if direction == "UP":
+        x -= 1
+    elif direction == "DOWN":
+        x += 1
+    elif direction == "LEFT":
+        y -= 1
+    elif direction == "RIGHT":
+        y += 1
+    else:
+        return {"message": f"The robot cannot move {direction}."}
+    
+    # Update robot position
+    robot_position = [x, y]
+    return {"message": f"The robot has moved {direction} to position ({x}, {y})."}
 
 # Dictionary to map function names to actual function calls
 FUNCTIONS = {
-    "get_current_time": get_current_time,
-    "get_greeting": get_greeting
+    "robot_move": robot_move
 }
 
 def wrapped_predict(message: str, history: list) -> iter:
@@ -38,55 +39,60 @@ def wrapped_predict(message: str, history: list) -> iter:
     Yields:
         str: Predicted responses from the model.
     """
-    # Construct the prompt
-    prompt = """
-    Ты ассистент, который может отвечать на вопросы пользователей и вызывать определенные функции. Если пользователь спрашивает что-то, что требует вызова функции, ответьте 'call <имя_функции>:<аргумент>'.
-    Доступные функции:
-    - get_current_time: Возвращает текущую дату и время.
-    - get_greeting(name): Приветствует пользователя с указанным именем.
-    
-    Пользователь: {}
-    """.format(message)
+    response_format = {
+        "type": "json_object",
+        "schema": CURR_JSON
+    }
+    message = "Create JSON with this text: " + message
 
-    # Generate response using LLama model
-    response = model(prompt, max_tokens=100)
-    response_text = response["choices"][0]["text"].strip()
+    for response in predict(message, history, response_format=response_format):
+        yield response
+        # try:
+        #     function_call = json.loads(response)
+        # except json.JSONDecodeError:
+        #     yield response
+        #     return
 
-    # Check if response calls a function
-    if response_text.startswith("call "):
-        try:
-            # Parse function call
-            function_call = response_text[len("call "):]
-            if ":" in function_call:
-                func_name, arg = function_call.split(":", 1)
-                if func_name in FUNCTIONS:
-                    # Call function with an argument
-                    result = FUNCTIONS[func_name](arg)
-                    yield json.dumps(result, ensure_ascii=False)
-                else:
-                    yield json.dumps({"error": f"Function '{func_name}' not found."})
-            elif function_call in FUNCTIONS:
-                # Call function without arguments
-                result = FUNCTIONS[function_call]()
-                yield json.dumps(result, ensure_ascii=False)
-            else:
-                yield json.dumps({"error": f"Function '{function_call}' not found."})
-        except Exception as e:
-            yield json.dumps({"error": str(e)})
-    else:
-        # If no function call, yield the model's response as usual
-        yield response_text
+        # if function_call:
+        #     function_name = function_call.get("function_name")
+        #     args = function_call.get("args", {})
+        #     # Call the appropriate function
+        #     if function_name in FUNCTIONS:
+        #         function_result = FUNCTIONS[function_name](**args)
+        #         yield json.dumps(function_result)
+        #     else:
+        #         yield json.dumps({"error": "Function not found."})
+        # else:
+        #     yield response
 
-# Create the Gradio interface
 with gr.Blocks(css=".gap { min-height: 75vh; }") as demo:
-    gr.Markdown("# Chat Interface with Function Calling Example")
+    gr.Markdown("# Chat Interface with Robot Movement Example")
 
-    # Here we get function-calling output
     with gr.Tab("Chat"):
         chatbot = gr.ChatInterface(
             fn=wrapped_predict,
-            description="Enter your message and let the model call specific functions when appropriate."
+            description="Enter your message and control the robot by issuing commands such as 'move up', 'move down', etc."
         )
 
-# Export demo for usage in __main__.py
 demo = demo
+
+CURR_JSON = {
+    "type": "function",
+    "function": {
+        "name": "robot_move",
+        "description": "Move the robot in one of the four cardinal directions.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "direction": {
+                    "type": "object",
+                    "enum": ["UP", "DOWN", "RIGHT", "LEFT"],
+                    "description": "The next move of the robot."
+                }
+            },
+            "required": ["direction"]
+        },
+        "required": ["name", "parameters"]
+    },
+    "required": ["function"]
+}

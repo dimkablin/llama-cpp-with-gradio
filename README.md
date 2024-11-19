@@ -16,11 +16,11 @@ https://img.shields.io/badge/MIT-green?style=flat&label=license
 )
 
 
-Этот проект является шаблонным для использование llama.cpp в стриме через интерфейс Gradio. Представлены 3 примера его использования:
-- В режиме генерации ответов.
-- выход JSON формата
-- вызов функций через llama.cpp
+This project is a template for using llama.cpp in a stream through the Gradio interface. Three examples of its use are presented:
 
+- TEXT generation mode.
+- JSON generation mode.
+- Non native function calls via llama.cpp (lightweited models struggle with generation).
 
 
 <a href="docs/example.gif" target="_blank" style="border-radius:10px; display: block; text-align: center;">
@@ -29,17 +29,13 @@ https://img.shields.io/badge/MIT-green?style=flat&label=license
 
 
 ## Table of Contents
-- [Installation](#installation)
-  - [Local Installation](#local-installation)
-  - [Docker Installation](#docker-installation)
+- [Local Installation](#local-installation)
 - [Usage](#usage)
 - [Project Structure](#project-structure)
 - [Tasks](#tasks)
 - [Contribution](#contribution)
 
-## Installation
-
-### Local Installation
+## Local Installation
 
 To install all dependencies and run the project locally, follow these steps:
 
@@ -71,22 +67,6 @@ To install all dependencies and run the project locally, follow these steps:
     ```
     Также параметр text можно заменить на json или function.
 
-### Docker Installation
-
-To build and run a Docker container, follow these steps:
-
-1. **Build the Docker image:**
-    ```sh
-    docker build -t llama-gradio .
-    ```
-
-    Ensure the server is bound to ```0.0.0.0``` to be accessible from outside the Docker container. Change ```server_name``` variable in ```src/gradio_app.py``` before building the docker image.
-
-2. **Run the Docker container:**
-    ```sh
-    docker run -p 8000:8000 --name llama_gradio_container llama-gradio
-    ```
-
 
 ## Usage
 
@@ -116,9 +96,11 @@ LLAMA-CPP-WITH-GRADIO.
 
 ## Tasks
 
-- [ ] Build docker container.
+- [x] Add llama text chat.
 - [x] Add llama JSON output example.
-- [ ] Add llama function usage example.
+- [x] Add llama function usage example.
+- [ ] Add native calling function
+- [ ] Add an example with multimodal model (llama3.2-vision-instruct). 
 
 ## Contribution
 
